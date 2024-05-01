@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class AssetImages {
   static const Map<int, String> diceImages = {
     1: 'assets/images/dice-1.png',

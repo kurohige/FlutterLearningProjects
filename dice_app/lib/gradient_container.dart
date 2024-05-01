@@ -1,4 +1,3 @@
-import 'package:dice_app/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:dice_app/assets.dart';
 
@@ -6,15 +5,27 @@ const Alignment beginAlightment = Alignment.center;
 const Alignment endAlightment = Alignment.bottomCenter;
 
 class GradientContainer extends StatelessWidget {
-  const GradientContainer({super.key, required this.newColors});
+  const GradientContainer(
+      {required this.newColors,
+      required this.diceNumber,
+      required this.onRoll,
+      super.key});
+
+  final List<Color> newColors;
+  final int diceNumber;
+  final VoidCallback onRoll;
 
   const GradientContainer.purple({super.key})
       : newColors = const [
           Color.fromARGB(255, 51, 47, 125),
           Color.fromARGB(255, 114, 39, 39),
-        ];
-
-  final List<Color> newColors;
+        ],
+        diceNumber = 1,
+        onRoll = defaultOnRoll;
+  // static method for deafult onRoll
+  static void defaultOnRoll() {
+    //print('Rolling Dice');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +43,11 @@ class GradientContainer extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(
-              AssetImages.diceImages[1]!,
+              AssetImages.diceImages[diceNumber]!,
               width: 200,
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: onRoll,
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.all(20),
                 foregroundColor: Colors.white,
