@@ -98,29 +98,47 @@ class QuestionsAndAnswers extends StatelessWidget {
             ),
           ]),
       child: Column(
-        children: [
-          Text(
-            question.questionText,
-            style: const TextStyle(
-              color: Color.fromARGB(255, 225, 222, 222),
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(height: 10),
-          ...(question.answers).map(
-            (answer) {
-              bool isCorrect = answer == question.correctAnswer;
-              bool isSelected = selectedAnswer == answer;
-              return Row(
-                children: [
-                  Icon(
-                    isSelected && isCorrect
-                        ? Icons.check
-                        : isSelected && !isCorrect
-                            ? Icons.warning
-                            : !isSelected && isCorrect
-                                ? Icons.check
-                                : Icons.close,
+        children: answerbox,
+      ),
+    );
+  }
+
+  List<Widget> get answerbox {
+    return [
+      Text(
+        question.questionText,
+        style: const TextStyle(
+          color: Color.fromARGB(255, 225, 222, 222),
+          fontSize: 20,
+        ),
+      ),
+      const SizedBox(height: 10),
+      ...(question.answers).map(
+        (answer) {
+          bool isCorrect = answer == question.correctAnswer;
+          bool isSelected = selectedAnswer == answer;
+          return Row(
+            children: [
+              Icon(
+                isSelected && isCorrect
+                    ? Icons.check
+                    : isSelected && !isCorrect
+                        ? Icons.warning
+                        : !isSelected && isCorrect
+                            ? Icons.check
+                            : Icons.close,
+                color: isSelected && isCorrect
+                    ? Colors.green
+                    : isSelected && !isCorrect
+                        ? Colors.yellow
+                        : !isSelected && isCorrect
+                            ? const Color.fromARGB(255, 251, 251, 251)
+                            : Colors.red,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                answer,
+                style: TextStyle(
                     color: isSelected && isCorrect
                         ? Colors.green
                         : isSelected && !isCorrect
@@ -128,33 +146,19 @@ class QuestionsAndAnswers extends StatelessWidget {
                             : !isSelected && isCorrect
                                 ? const Color.fromARGB(255, 251, 251, 251)
                                 : Colors.red,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    answer,
-                    style: TextStyle(
-                        color: isSelected && isCorrect
-                            ? Colors.green
-                            : isSelected && !isCorrect
-                                ? Colors.yellow
-                                : !isSelected && isCorrect
-                                    ? const Color.fromARGB(255, 251, 251, 251)
-                                    : Colors.red,
-                        shadows: const [
-                          Shadow(
-                            offset: Offset(1.5, 1.5),
-                            color: Color.fromARGB(255, 11, 10, 10),
-                            blurRadius: 1,
-                          ),
-                        ]),
-                  ),
-                ],
-              );
-            },
-          ),
-          const SizedBox(height: 20),
-        ],
+                    shadows: const [
+                      Shadow(
+                        offset: Offset(1.5, 1.5),
+                        color: Color.fromARGB(255, 11, 10, 10),
+                        blurRadius: 1,
+                      ),
+                    ]),
+              ),
+            ],
+          );
+        },
       ),
-    );
+      const SizedBox(height: 20),
+    ];
   }
 }
