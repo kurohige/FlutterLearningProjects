@@ -16,7 +16,19 @@ class ExpenseItem extends StatelessWidget {
       child: Card(
         child: ListTile(
           title: Text(expense.title),
-          subtitle: Text(expense.amount.toString()),
+          subtitle: Row(
+            children: [
+              Text('\$${expense.amount.toStringAsFixed(2)}'),
+              const Spacer(),
+              Row(
+                children: [
+                  Icon(categoryIcons[expense.category]),
+                  const SizedBox(width: 4),
+                  Text(expense.formattedDate),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
