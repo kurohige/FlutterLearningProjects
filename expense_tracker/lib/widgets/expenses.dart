@@ -12,7 +12,6 @@ class Expenses extends StatefulWidget {
   }
 }
 
-
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registeredexpenses = [
     Expense(
@@ -35,8 +34,15 @@ class _ExpensesState extends State<Expenses> {
     });
   }
 
+  void _deleteExpense(Expense expense) {
+    setState(() {
+      _registeredexpenses.remove(expense);
+    });
+  }
+
   void _openAddExepenseOverlay() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpense(addExpense: _addExpense),
     );
@@ -56,7 +62,12 @@ class _ExpensesState extends State<Expenses> {
       body: Column(
         children: [
           const Text('Expenses'),
-          Expanded(child: ExpensesList(expenses: _registeredexpenses)),
+          Expanded(
+            child: ExpensesList(
+              expenses: _registeredexpenses,
+              removeExpense: _deleteExpense,
+            ),
+          ),
         ],
       ),
     );

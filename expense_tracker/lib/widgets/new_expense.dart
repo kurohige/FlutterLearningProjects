@@ -29,6 +29,20 @@ class _NewExpenseState extends State<NewExpense> {
         enteredAmount == null ||
         enteredAmount == 0 ||
         _category == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Empty or Invalid input'),
+          content:
+              const Text('Please enter a valid title, amount and category.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
+      );
       return;
     }
 
