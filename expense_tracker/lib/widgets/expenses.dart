@@ -35,9 +35,26 @@ class _ExpensesState extends State<Expenses> {
   }
 
   void _deleteExpense(Expense expense) {
+    final expenseIndex = _registeredexpenses.indexOf(expense);
     setState(() {
       _registeredexpenses.remove(expense);
     });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    // set snackbar to undo the delete
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 3),
+        content: const Text('Expense deleted'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              _registeredexpenses.insert(expenseIndex, expense);
+            });
+          },
+        ),
+      ),
+    );
   }
 
   void _openAddExepenseOverlay() {
@@ -50,8 +67,19 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text('No expenses found. start adding some!'),
+    );
+
+    if (_registeredexpenses.isNotEmpty) {
+      mainContent = ExpensesList(
+        expenses: _registeredexpenses,
+        removeExpense: _deleteExpense,
+      );
+    }
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Expense Tracker'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -63,10 +91,7 @@ class _ExpensesState extends State<Expenses> {
         children: [
           const Text('Expenses'),
           Expanded(
-            child: ExpensesList(
-              expenses: _registeredexpenses,
-              removeExpense: _deleteExpense,
-            ),
+            child: mainContent,
           ),
         ],
       ),
