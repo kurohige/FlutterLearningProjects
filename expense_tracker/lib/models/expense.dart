@@ -39,3 +39,19 @@ class Expense {
 
   get formattedDate => dateFormatter.format(date);
 }
+
+class ExpenseBucket {
+  final Category category;
+  final List<Expense> expenses;
+
+  ExpenseBucket.forCategory(List<Expense> allExpenses, this.category)
+      : expenses = allExpenses
+            .where((expense) => expense.category == category)
+            .toList();
+
+  const ExpenseBucket({required this.category, required this.expenses});
+
+  double get totalExpenses {
+    return expenses.fold(0.0, (sum, expense) => sum + expense.amount);
+  }
+}
