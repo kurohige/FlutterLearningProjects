@@ -149,19 +149,12 @@ class _NewExpenseState extends State<NewExpense> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-                const Color.fromARGB(255, 254, 254, 255)),
-          ),
           onPressed: _submitData,
-          child: const Text(
-              style: TextStyle(color: Color.fromARGB(255, 16, 16, 17)),
-              'Add Expense'),
+          child: const Text('Add Expense'),
         ),
         ElevatedButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text(
-            style: TextStyle(color: Color.fromARGB(255, 7, 7, 7)),
             'Cancel',
           ),
         ),
@@ -170,6 +163,11 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   DropdownButton<Category> categorySelection() {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    final textColor =
+        isDarkTheme ? Color.fromARGB(255, 255, 255, 255) : Colors.black;
+    final iconColor = isDarkTheme ? Colors.white : Colors.black;
+
     return DropdownButton<Category>(
       isExpanded: true,
       value: _category,
@@ -183,17 +181,26 @@ class _NewExpenseState extends State<NewExpense> {
           value: category,
           child: Row(
             children: [
-              Icon(categoryIcons[category]),
+              Icon(
+                categoryIcons[category],
+                color: iconColor,
+              ),
               const SizedBox(width: 8),
-              Text(category.toString().split('.').last),
+              Text(
+                category.toString().split('.').last,
+              ),
             ],
           ),
         );
       }).toList(),
-      hint: const Text('Select Category'),
+      hint: const Text(
+        'Select Category',
+        style: TextStyle(color: Color.fromARGB(0, 0, 0, 0)),
+      ),
+      dropdownColor: isDarkTheme ? Colors.grey[800] : Colors.white,
       underline: Container(
         height: 2,
-        color: const Color.fromARGB(255, 21, 21, 21),
+        color: Theme.of(context).primaryColor,
       ),
     );
   }
