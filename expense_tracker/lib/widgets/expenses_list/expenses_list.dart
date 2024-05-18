@@ -20,6 +20,10 @@ class ExpensesList extends StatelessWidget {
         // for dismissible to work, we need to provide a key that is related to
         // the item that is being dismissed
         key: ValueKey(expenses[index]),
+        background: Container(
+          color: Theme.of(context).colorScheme.error.withOpacity(0.75),
+          margin: Theme.of(context).cardTheme.margin,
+        ),
         onDismissed: (_) => removeExpense(expenses[index]), // remove the item
         child: ExpenseItem(
           expense: expenses[index],

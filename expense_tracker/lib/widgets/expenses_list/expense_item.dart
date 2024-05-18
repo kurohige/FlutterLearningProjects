@@ -15,7 +15,11 @@ class ExpenseItem extends StatelessWidget {
       ),
       child: Card(
         child: ListTile(
-          title: Text(expense.title),
+          title: Text(
+            expense.title,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           subtitle: Row(
             children: [
               Text('\$${expense.amount.toStringAsFixed(2)}'),
