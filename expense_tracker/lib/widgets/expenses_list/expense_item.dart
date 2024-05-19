@@ -17,7 +17,7 @@ class ExpenseItem extends StatelessWidget {
         child: ListTile(
           title: Text(
             expense.title,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           subtitle: Row(

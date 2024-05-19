@@ -90,22 +90,30 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          TextField(
-            controller: _titleController,
-            maxLength: 50,
-            decoration: const InputDecoration(labelText: 'Title'),
-            keyboardType: TextInputType.text,
+    final KeyboardSpace = MediaQuery.of(context).viewInsets.bottom;
+
+    return LayoutBuilder(
+      builder: (ctx, constrains) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16, 48, 16, 16 + KeyboardSpace),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                TextField(
+                  controller: _titleController,
+                  maxLength: 50,
+                  decoration: const InputDecoration(labelText: 'Title'),
+                  keyboardType: TextInputType.text,
+                ),
+                amountAndDate(),
+                categorySelection(),
+                addAndCancelButton(),
+              ],
+            ),
           ),
-          amountAndDate(),
-          categorySelection(),
-          addAndCancelButton(),
-        ],
-      ),
+        );
+      }
     );
   }
 
@@ -165,7 +173,7 @@ class _NewExpenseState extends State<NewExpense> {
   DropdownButton<Category> categorySelection() {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     final textColor =
-        isDarkTheme ? Color.fromARGB(255, 255, 255, 255) : Colors.black;
+        isDarkTheme ? const Color.fromARGB(255, 255, 255, 255) : Colors.black;
     final iconColor = isDarkTheme ? Colors.white : Colors.black;
 
     return DropdownButton<Category>(
